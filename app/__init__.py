@@ -13,7 +13,7 @@ db = SQLAlchemy(app)
 #Instanciar un objeto de la clase Migrate
 migrate = Migrate(app,db)
 #Importamos el modelo
-from app.private.models import Cliente
+from app.private import models
 
 
 from .public import public
