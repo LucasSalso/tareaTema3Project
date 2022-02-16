@@ -1,12 +1,28 @@
 {% extends "base/base.html" %}
-{% from 'base/_helpers.html' import generarForm with context %}
 {% block titulo %}Clientes{% endblock %}
 {% block contenido %}
 <h1>Clientes</h1>
 <div class="row">
-    <form action="" method="post">
-		{{ generarForm(form) }}
-		<input class="btn btn-primary" type="submit" value="Enviar">
-    </form>
+    <a href="{{ url_for('private.crearcliente') }}">Nuevo cliente</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>D.N.I</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Imagen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.dni }}</td>
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.apellidos }}</td>
+                <td>{{ cliente.imagen }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
