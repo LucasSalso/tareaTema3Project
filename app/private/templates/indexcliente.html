@@ -1,8 +1,12 @@
 {% extends "base/base.html" %}
+{% from 'base/_helpers.html' import generarForm with context %}
 {% block titulo %}Clientes{% endblock %}
 {% block contenido %}
 <h1>Clientes</h1>
 <div class="row">
-
+    <form action="" method="post">
+		{{ generarForm(form) }}
+		<input class="btn btn-primary" type="submit" value="Enviar">
+    </form>
 </div>
 {% endblock %}

@@ -15,3 +15,4 @@ class Cliente(db.Model):
                 db.session.commit()
         except IntegrityError:
             raise Exception("Error: ya existe un cliente con el mismo DNI")
+
