@@ -34,13 +34,14 @@ def crearcliente():
         BASE_DIR = dirname(dirname(abspath(__file__)))
         UPLOAD_DIR = join(BASE_DIR, 'upload')
         filename = secure_filename(form.imagen.data.filename)
+        filename = dni + "." + filename.split(".")[1]
         form.imagen.data.save(UPLOAD_DIR + "/" + filename)
 
         cliente = Cliente()
         cliente.dni = dni
         cliente.nombre = nombre
         cliente.apellidos = apellidos
-        cliente.imagen = dni + "." + filename.split(".")[1]
+        cliente.imagen = filename
         cliente.guardarCliente()
 
         clientes = Cliente().recuperarClientes()
