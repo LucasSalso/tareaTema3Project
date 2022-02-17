@@ -3,6 +3,42 @@
 {% block contenido %}
 <h1>Clientes</h1>
 <div class="row">
+    <a href="{{ url_for('private.crearcliente') }}" class="link-info">Nuevo cliente</a>
 
+    <br>
+
+    <form action="" method="post">
+        <div class="input-group mb-3">
+            <input type="search" class="form-control" name="buscador_dni" placeholder="DNI a buscar" autofocus required>
+            <div class="input-group-append">
+                {% if habilitarmostrartodosclientes %}
+                    <input type="button" value="Quitar filtro" class="btn btn-primary" onclick="location.href={{ url_for('private.indexcliente') }}"/>
+                {% else %}
+                    <input type="submit" value="Buscar" class="btn btn-primary"/>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>D.N.I</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Imagen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.dni }}</td>
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.apellidos }}</td>
+                <td>{{ cliente.imagen }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
