@@ -4,9 +4,8 @@
 {% block contenido %}
 <h1>Clientes</h1>
 <div class="row">
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {{ generarForm(form) }}
-        <input class="btn btn-primary" type="submit" value="Enviar">
     </form>
 </div>
 {% endblock %}

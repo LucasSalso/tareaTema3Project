@@ -7,6 +7,10 @@ class Cliente(db.Model):
     imagen = db.Column(db.String(50), nullable=False)
 
     def recuperarClientes(self):
-        return db.session.query(Cliente).all
+        return Cliente.query.all()
+
+    def guardarCliente(self):
+        db.session.add(self)
+        db.session.commit()
 
 db.create_all()
