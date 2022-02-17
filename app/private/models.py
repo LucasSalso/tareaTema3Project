@@ -6,8 +6,11 @@ class Cliente(db.Model):
     apellidos = db.Column(db.String(50), nullable=False)
     imagen = db.Column(db.String(50), nullable=False)
 
-    def recuperarClientes(self):
-        return Cliente.query.all()
+    def recuperarClientes(self, dni=None):
+        if dni == None:
+            return Cliente.query.all()
+        else:
+            return Cliente.query.filter_by(dni=dni)
 
     def guardarCliente(self):
         db.session.add(self)

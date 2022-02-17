@@ -12,8 +12,16 @@ from .models import Cliente
 
 @private.route("/indexcliente/", methods=["GET","POST"])
 def indexcliente():
-    clientes = Cliente().recuperarClientes()
-    return render_template("indexcliente.html", clientes=clientes)
+    cliente = Cliente()
+
+    if request.method == "POST":
+        dni = request.form.get("buscador_dni")
+        clientes = cliente.recuperarClientes(dni)
+        habilitarmostrartodosclientes = True
+    else :
+        clientes = cliente.recuperarClientes()
+        habilitarmostrartodosclientes = False
+    return render_template("indexcliente.html", clientes=clientes, habilitarmostrartodosclientes=habilitarmostrartodosclientes)
 
 @private.route("/crearcliente/", methods=["GET","POST"])
 def crearcliente():
@@ -35,5 +43,6 @@ def crearcliente():
         cliente.imagen = dni + "." + filename.split(".")[1]
         cliente.guardarCliente()
 
-        return form.nombre.data
+        clientes = Cliente().recuperarClientes()
+        return render_template("indexcliente.html", clientes=clientes, habilitarmostrartodosclientes=False)
     return render_template("crearcliente.html", form=form)
