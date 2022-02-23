@@ -1,7 +1,9 @@
+import base64
 from os.path import dirname, abspath, join
 
 from flask import render_template, request
 from werkzeug.utils import secure_filename
+from wtforms import ValidationError
 
 from .forms import ClienteForm
 from werkzeug.datastructures import CombinedMultiDict
@@ -31,17 +33,21 @@ def crearcliente():
         nombre = request.form.get("nombre")
         apellidos = request.form.get("apellidos")
 
-        BASE_DIR = dirname(dirname(abspath(__file__)))
-        UPLOAD_DIR = join(BASE_DIR, 'upload')
-        filename = secure_filename(form.imagen.data.filename)
-        filename = dni + "." + filename.split(".")[1]
-        form.imagen.data.save(UPLOAD_DIR + "/" + filename)
+        #BASE_DIR = dirname(dirname(abspath(__file__)))
+        #UPLOAD_DIR = join(BASE_DIR, 'upload')
+        #filename = secure_filename(form.imagen.data.filename)
+        #filename = dni + "." + filename.split(".")[1]
+        #form.imagen.data.save(UPLOAD_DIR + "/" + filename)
 
         cliente = Cliente()
         cliente.dni = dni
         cliente.nombre = nombre
         cliente.apellidos = apellidos
-        cliente.imagen = filename
+
+        encoded_bytes = base64.b64encode(form.imagen.data.read())
+        encoded_string = str(encoded_bytes).replace("b'", "").replace("'", "")
+        cliente.imagen = encoded_string
+
         cliente.guardarCliente()
 
         clientes = Cliente().recuperarClientes()
