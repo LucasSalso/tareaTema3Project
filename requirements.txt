@@ -3,3 +3,4 @@ Flask-WTF
 Flask-SqlAlchemy
 Flask-Migrate
 psycopg2
+cryptography

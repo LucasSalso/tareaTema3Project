@@ -10,8 +10,14 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ url_for('public.index') }}">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('private.indexcliente') }}">Clientes</a>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Usuarios</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ url_for('login.registrarUsuario') }}">Registro</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('login.loginUsuario') }}">Login</a></li>
+          </ul>
         </li>
       </ul>
     </div>
