@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for
+from flask_login import current_user, login_user, logout_user
 
 import app
 
@@ -24,17 +25,30 @@ def registrarUsuario():
             error = "No se ha podido dar de alta " + e.__str__()
     return render_template("registrarUsuario.html", form=form, error=error)
 
+@app.login_manager.user_loader
+def loadUser(userId):
+    return Usuario.get_by_id(userId)
+
 @login.route("/loginUsuario/", methods=["GET","POST"])
 def loginUsuario():
     error = ""
+
+    if current_user.is_authenticated:
+        return redirect(url_for('private.indexcliente'));
+
     form = LoginForm(request.form)
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
-        usuario = Usuario.get_by_username(username)
-        if usuario and usuario.check_password(password):
+        user = Usuario.get_by_username(username)
+        if user and user.check_password(password):
+            login_user(user, remember=form.recuerdame.data)
             return redirect(url_for("private.indexcliente"))
         else:
             error = "Usuario y/o contraseña incorrecta"
     return render_template("loginUsuario.html", form=form, error=error)
 
+@login.route("/logout/")
+def logout():
+    logout_user()
+    return redirect(url_for("public.index"))

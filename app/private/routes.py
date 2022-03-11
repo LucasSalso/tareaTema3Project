@@ -1,8 +1,9 @@
 import base64
 from os.path import dirname, abspath, join
 
-from flask import render_template, request
-from werkzeug.utils import secure_filename
+from flask import render_template, request, url_for
+from flask_login import current_user
+from werkzeug.utils import secure_filename, redirect
 from wtforms import ValidationError
 
 from .forms import ClienteForm
@@ -14,6 +15,10 @@ from .models import Cliente
 
 @private.route("/indexcliente/", methods=["GET","POST"])
 def indexcliente():
+
+    if not current_user.is_authenticated:
+        return redirect(url_for("public.index"))
+
     cliente = Cliente()
 
     if request.method == "POST":
@@ -27,6 +32,10 @@ def indexcliente():
 
 @private.route("/crearcliente/", methods=["GET","POST"])
 def crearcliente():
+
+    if not current_user.is_authenticated:
+        return redirect(url_for("public.index"))
+
     form = ClienteForm(CombinedMultiDict((request.files, request.form)))
     if form.validate_on_submit():
         dni = request.form.get("dni")
