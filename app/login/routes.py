@@ -10,6 +10,10 @@ from .. import db
 
 @login.route("/registrarUsuario/", methods=["GET","POST"])
 def registrarUsuario():
+
+    if current_user.is_authenticated:
+        return redirect(url_for('private.indexcliente'));
+
     error = ""
     form = RegisterForm(request.form)
     if form.validate_on_submit():
