@@ -14,6 +14,8 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 
+login_manager.login_view = "login.loginUsuario"
+
 @app.errorhandler(413)
 def too_large(e):
     return "La imagen tiene un tamaño mayor al permitido", 413
@@ -21,9 +23,11 @@ def too_large(e):
 from .public import public
 from .private import private
 from .login import login
+from .admin import admin
 
 def create_app():
     app.register_blueprint(public)
     app.register_blueprint(private)
     app.register_blueprint(login)
+    app.register_blueprint(admin)
     return  app

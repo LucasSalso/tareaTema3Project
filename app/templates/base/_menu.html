@@ -14,6 +14,11 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ url_for('private.indexcliente') }}">Clientes</a>
           </li>
+          {% if current_user.isAdmin%}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{ url_for('admin.listadoUsuarios') }}">Usuarios</a>
+            </li>
+          {% endif %}
         {% endif %}
       </ul>
       <ul class="navbar-nav ms-auto">

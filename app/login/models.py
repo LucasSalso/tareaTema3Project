@@ -10,6 +10,7 @@ class Usuario(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
     nombre = db.Column(db.String(20), nullable=False)
     apellidos = db.Column(db.String(50), nullable=False)
+    isAdmin = db.Column(db.Boolean, default=False)
 
     def __str__(self):
         return f"{self.apellidos},{self.nombre}"
@@ -35,5 +36,8 @@ class Usuario(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    def recuperarUsuarios(self):
+        return Usuario.query.all()
 
 db.create_all()
