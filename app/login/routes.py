@@ -26,6 +26,7 @@ def registrarUsuario():
             usuario.create()
             return redirect(url_for('login.loginUsuario'))
         except Exception as e:
+            app.logger.error("No se ha podido dar de alta " + e.__str__())
             error = "No se ha podido dar de alta " + e.__str__()
     return render_template("registrarUsuario.html", form=form, error=error)
 
@@ -47,13 +48,16 @@ def loginUsuario():
         user = Usuario.get_by_username(username)
         if user and user.check_password(password):
             login_user(user, remember=form.recuerdame.data)
+            app.logger.info("Login correcto : " + username)
             return redirect(url_for("private.indexcliente"))
         else:
             error = "Usuario y/o contraseña incorrecta"
+            app.logger.warning("Login erroneo : " + username)
     return render_template("loginUsuario.html", form=form, error=error)
 
 @login.route("/logout/")
 @login_required
 def logout():
     logout_user()
+    app.logger.info("Logout correcto")
     return redirect(url_for("public.index"))

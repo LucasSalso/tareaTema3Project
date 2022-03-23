@@ -1,8 +1,11 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from .log.logs import configureLogging
 
 app = Flask(__name__)
+
+logger = configureLogging(__name__)
 
 # Settings
 app.secret_key = "secret"

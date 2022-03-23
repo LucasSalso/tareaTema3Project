@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 
+import app
 from ..__init__ import db
 from cryptography.fernet import Fernet
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -19,7 +20,9 @@ class Usuario(db.Model, UserMixin):
         try:
             db.session.add(self)
             db.session.commit()
+            app.logger.info("Se ha creado correctamente el usuario")
         except:
+            app.logger.error("No se ha creado correctamente el usuario")
             raise
 
     @staticmethod
@@ -38,6 +41,7 @@ class Usuario(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def recuperarUsuarios(self):
+        app.logger.info("Se recupera la lista de usuarios")
         return Usuario.query.all()
 
 db.create_all()

@@ -1,3 +1,4 @@
+import app
 from ..__init__ import db
 
 class Cliente(db.Model):
@@ -8,12 +9,15 @@ class Cliente(db.Model):
 
     def recuperarClientes(self, dni=None):
         if dni == None:
+            app.logger.info("Recuperamos todos los clientes")
             return Cliente.query.all()
         else:
+            app.logger.info("Filtramos los clientes con DNI " + dni)
             return Cliente.query.filter_by(dni=dni)
 
     def guardarCliente(self):
         db.session.add(self)
         db.session.commit()
+        app.logger.info("Se crea correctamente el cliente")
 
 db.create_all()
