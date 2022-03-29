@@ -26,7 +26,7 @@ def registrarUsuario():
             usuario.create()
             return redirect(url_for('login.loginUsuario'))
         except Exception as e:
-            app.logger.error("No se ha podido dar de alta " + e.__str__())
+            app.logger.exception("No se ha podido dar de alta " + e.__str__())
             error = "No se ha podido dar de alta " + e.__str__()
     return render_template("registrarUsuario.html", form=form, error=error)
 

@@ -22,7 +22,7 @@ class Usuario(db.Model, UserMixin):
             db.session.commit()
             app.logger.info("Se ha creado correctamente el usuario")
         except:
-            app.logger.error("No se ha creado correctamente el usuario")
+            app.logger.exception("No se ha creado correctamente el usuario")
             raise
 
     @staticmethod
