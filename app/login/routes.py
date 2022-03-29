@@ -16,7 +16,7 @@ def registrarUsuario():
 
     error = ""
     form = RegisterForm(request.form)
-    if form.validate_on_submit():
+    if form.validate_on_submit() and app.recaptcha.verify():
         try:
             usuario = Usuario()
             usuario.username = form.username.data
@@ -42,7 +42,7 @@ def loginUsuario():
         return redirect(url_for('private.indexcliente'));
 
     form = LoginForm(request.form)
-    if form.validate_on_submit():
+    if form.validate_on_submit() and app.recaptcha.verify():
         username = form.username.data
         password = form.password.data
         user = Usuario.get_by_username(username)

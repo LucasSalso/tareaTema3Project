@@ -15,6 +15,7 @@
             <form action="{{ url_for('login.registrarUsuario') }}" method="post">
                 {{ form.csrf_token() }}
                 {{ generarForm(form) }}
+                {{ recaptcha }}
                 <input type="submit" value="Dar de alta" class="btn btn-primary"/>
             </form>
         </div>

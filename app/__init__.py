@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_recaptcha import ReCaptcha
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from .log.logs import configureLogging
@@ -13,6 +14,10 @@ app.config['SECRET_KEY'] = 'secret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123456@localhost:5432/tareaTema3Project'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
+app.config['RECAPTCHA_SITE_KEY'] = 'SITE_KEY'
+app.config['RECAPTCHA_SECRET_KEY'] = 'SECRET_KEY'
+
+recaptcha = ReCaptcha(app)
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
